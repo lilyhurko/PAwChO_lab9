@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wybierz kraj i miasto</title>
+    <script>
+        const citiesByCountry = {
+            'Polska': ['Warszawa', 'Kraków', 'Gdańsk'],
+            'USA': ['Nowy Jork', 'Los Angeles', 'Chicago'],
+            'Wielka Brytania': ['Londyn', 'Manchester', 'Edynburg']
+        };
+
+        function updateCities() {
+            const countrySelect = document.getElementById('country');
+            const citySelect = document.getElementById('city');
+            const selectedCountry = countrySelect.value;
+            
+            // Usunięcie wszystkich opcji z listy miast
+            citySelect.innerHTML = '';
+
+            // Dodanie nowych opcji do listy miast
+            if (citiesByCountry[selectedCountry]) {
+                citiesByCountry[selectedCountry].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Wybierz kraj i miasto</h1>
+    <form action="{{ url_for('weather') }}" method="POST">
+        <label for="country">Wybierz kraj:</label>
+        <select name="country" id="country" required onchange="updateCities()">
+            <option value="">Wybierz kraj</option>
+            {% for country in countries_and_cities.keys() %}
+                <option value="{{ country }}">{{ country }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="city">Wybierz miasto:</label>
+        <select name="city" id="city" required>
+        </select>
+
+        <button type="submit">Pokaż pogodę</button>
+    </form>
+</body>
+</html>
