@@ -14,21 +14,21 @@ BASE_URL = 'http://api.weatherapi.com/v1/current.json'
 countries_and_cities = {
     'Polska': ['Warszawa', 'Kraków', 'Gdańsk'],
     'USA': ['Nowy Jork', 'Los Angeles', 'Chicago'],
-    'Wielka Brytania': ['Londyn', 'Manchester', 'Edynburg']
+    'Ukraina': ['Kyiv', 'Rivne', 'Lwów'],
 }
 
 # Ustawienia logowania
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 # Imię i nazwisko autora
-author_name = "Lilia Hurko"  # Zmień na swoje imię i nazwisko
+author_name = "Lilia Hurko" 
 
 @app.route('/')
 def index():
     # Zapisanie daty uruchomienia aplikacji w logach
     logging.info(f'Aplikacja uruchomiona: {datetime.now()}')
     logging.info(f'Autor aplikacji: {author_name}')
-    logging.info(f'Aplikacja nasłuchuje na porcie TCP: 5000')  # Port, na którym aplikacja nasłuchuje
+    logging.info(f'Aplikacja nasłuchuje na porcie TCP: 5000')  
     return render_template('index.html', countries_and_cities=countries_and_cities)
 
 @app.route('/weather', methods=['POST'])
@@ -44,7 +44,7 @@ def weather():
     params = {
         'key': API_KEY,
         'q': f'{city},{country}',
-        'lang': 'pl'  # Język polski
+        'lang': 'pl'  
     }
     
     response = requests.get(BASE_URL, params=params)
